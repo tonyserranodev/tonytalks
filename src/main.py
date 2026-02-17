@@ -1,14 +1,17 @@
 import os
 import shutil
+import sys
 
-from generate_html import generate_page, generate_pages_recursive
+from generate_html import generate_pages_recursive
 
 
 def main():
-    if os.path.exists("public"):
-        shutil.rmtree("public")
-    copy_directory("static", "public")
-    generate_pages_recursive("content", "template.html", "public")
+    basepath = sys.argv or "/"
+
+    if os.path.exists("docs"):
+        shutil.rmtree("docs")
+    copy_directory("static", "docs")
+    generate_pages_recursive("content", "template.html", "docs", basepath)
 
 
 def copy_directory(source: str, destination: str) -> None:
